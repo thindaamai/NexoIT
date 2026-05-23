@@ -31,8 +31,8 @@ export function Header() {
           {services.map((service) => (
             <Link
               key={service.slug}
-              href={`/#${service.slug}`}
-              className={navLinkClass(pathname === `/#${service.slug}`)}
+              href={`/services/${service.slug}`}
+              className={navLinkClass(pathname === `/services/${service.slug}`)}
             >
               {service.title}
             </Link>
@@ -53,7 +53,7 @@ export function Header() {
             <div className="absolute right-0 mt-3 grid w-[min(82vw,300px)] gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
               <MobileGroup title="Services">
                 {services.map((service) => (
-                  <Link key={service.slug} href={`/#${service.slug}`} className={mobileLinkClass(pathname === `/#${service.slug}`)}>
+                  <Link key={service.slug} href={`/services/${service.slug}`} className={mobileLinkClass(pathname === `/services/${service.slug}`)}>
                     {service.title}
                   </Link>
                 ))}
@@ -119,7 +119,7 @@ export function Footer() {
           <div className="mb-4 text-sm font-semibold text-white">Services</div>
           <div className="grid gap-2">
             {services.map((service) => (
-              <Link key={service.slug} href={`/#${service.slug}`} className="text-sm text-slate-400 transition hover:text-cyan-200">
+              <Link key={service.slug} href={`/services/${service.slug}`} className="text-sm text-slate-400 transition hover:text-cyan-200">
                 {service.title}
               </Link>
             ))}

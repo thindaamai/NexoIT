@@ -10,6 +10,8 @@
   --color-foreground: var(--foreground);
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+  --font-jakarta: var(--font-plus-jakarta), "Geist", sans-serif;
+  --font-outfit: var(--font-outfit), "Geist", sans-serif;
 }
 
 body {

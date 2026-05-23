@@ -102,6 +102,7 @@ type ServiceShowcaseItem = {
   slug: string;
   title: string;
   summary: string;
+  tagline?: string;
   image: string;
   items: string[];
 };
@@ -161,11 +162,11 @@ export function ServiceShowcase({ services }: { services: ServiceShowcaseItem[] 
             animate={{ scale: [1, 1.8, 1], opacity: [0.25, 0.9, 0.25] }}
             transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/30 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
             <div className="max-w-lg">
               <motion.p
-                className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cyan-300 sm:mb-3 sm:text-xs sm:tracking-[0.26em]"
+                className="mb-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-cyan-400 sm:mb-2 sm:text-xs sm:tracking-[0.26em]"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.45 }}
@@ -173,7 +174,7 @@ export function ServiceShowcase({ services }: { services: ServiceShowcaseItem[] 
                 Service {activeIndex + 1}
               </motion.p>
               <motion.h3
-                className="text-2xl font-semibold tracking-tight text-white sm:text-4xl"
+                className="text-xl font-semibold tracking-tight text-white sm:text-2xl lg:text-3xl"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.28, duration: 0.5 }}
@@ -181,12 +182,12 @@ export function ServiceShowcase({ services }: { services: ServiceShowcaseItem[] 
                 {activeService.title}
               </motion.h3>
               <motion.p
-                className="mt-3 max-w-md text-sm leading-6 text-slate-300"
+                className="mt-2 max-w-md text-xs sm:text-sm leading-relaxed text-slate-300/85"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.36, duration: 0.5 }}
               >
-                {activeService.summary.split(".")[0]}.
+                {activeService.tagline ?? activeService.summary}
               </motion.p>
             </div>
           </div>

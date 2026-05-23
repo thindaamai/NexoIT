@@ -28,14 +28,11 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex">
-          <Link href="/" className={navLinkClass(pathname === "/")}>
-            Home
-          </Link>
           {services.map((service) => (
             <Link
               key={service.slug}
-              href={`/services/${service.slug}`}
-              className={navLinkClass(pathname === `/services/${service.slug}`)}
+              href={`/#${service.slug}`}
+              className={navLinkClass(pathname === `/#${service.slug}`)}
             >
               {service.title}
             </Link>
@@ -54,12 +51,9 @@ export function Header() {
               <Menu size={18} />
             </summary>
             <div className="absolute right-0 mt-3 grid w-[min(82vw,300px)] gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
-              <Link href="/" className={mobileLinkClass(pathname === "/")}>
-                Home
-              </Link>
               <MobileGroup title="Services">
                 {services.map((service) => (
-                  <Link key={service.slug} href={`/services/${service.slug}`} className={mobileLinkClass(pathname === `/services/${service.slug}`)}>
+                  <Link key={service.slug} href={`/#${service.slug}`} className={mobileLinkClass(pathname === `/#${service.slug}`)}>
                     {service.title}
                   </Link>
                 ))}
@@ -76,18 +70,18 @@ export function Header() {
 }
 
 function navLinkClass(active: boolean) {
-  return `rounded-md px-4 py-2 text-sm transition ${
+  return `rounded-md px-4 py-2 text-sm transition font-medium ${
     active
-      ? "bg-white text-black shadow-[0_0_28px_rgba(255,255,255,0.16)]"
-      : "text-slate-300 hover:bg-white/8 hover:text-white"
+      ? "text-white"
+      : "text-slate-400 hover:text-white"
   }`;
 }
 
 function mobileLinkClass(active: boolean) {
-  return `rounded px-3 py-2 text-sm transition ${
+  return `rounded px-3 py-2 text-sm transition font-medium ${
     active
-      ? "bg-white text-black"
-      : "text-slate-300 hover:bg-white/8 hover:text-white"
+      ? "text-white"
+      : "text-slate-400 hover:text-white"
   }`;
 }
 
@@ -125,7 +119,7 @@ export function Footer() {
           <div className="mb-4 text-sm font-semibold text-white">Services</div>
           <div className="grid gap-2">
             {services.map((service) => (
-              <Link key={service.slug} href={`/services/${service.slug}`} className="text-sm text-slate-400 transition hover:text-cyan-200">
+              <Link key={service.slug} href={`/#${service.slug}`} className="text-sm text-slate-400 transition hover:text-cyan-200">
                 {service.title}
               </Link>
             ))}

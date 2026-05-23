@@ -9,6 +9,13 @@ type ServicePageProps = {
   params: Promise<{ slug: string }>;
 };
 
+const servicePhotos: Record<string, string> = {
+  "business-essentials": "/service-photos/business-essentials.jpg",
+  "web-development": "/service-photos/web-development.jpg",
+  "professional-services": "/service-photos/professional-services.jpg",
+  "cloud-services": "/service-photos/cloud-services.jpg",
+};
+
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
 }
@@ -37,6 +44,8 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
     notFound();
   }
 
+  const servicePhoto = servicePhotos[service.slug] ?? service.image;
+
   return (
     <>
       <section className="overflow-hidden border-b border-white/10 bg-[#050607]">
@@ -59,22 +68,19 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="rounded-lg border border-white/10 bg-white/[0.035] p-4">
+            <div className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.035]">
               <Image
-                src={service.image}
-                alt={`${service.title} visual`}
+                src={servicePhoto}
+                alt={`${service.title} service environment`}
                 width={1200}
                 height={800}
                 priority
-                className="aspect-[4/3] rounded-md object-cover"
+                className="aspect-[4/3] object-cover opacity-90 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
               />
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                {service.metrics.map((metric) => (
-                  <div key={metric} className="rounded-md border border-white/10 bg-black/30 p-4 text-sm font-semibold text-white">
-                    <span className="mb-2 block h-px w-10 bg-cyan-300" />
-                    {metric}
-                  </div>
-                ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/18 to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Service environment</p>
+                <h2 className="mt-2 max-w-lg text-2xl font-semibold text-white">{service.title}</h2>
               </div>
             </div>
           </Reveal>
@@ -107,10 +113,15 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
       <section className="bg-[#0b0d10] px-5 py-20 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
-            <div className="sticky top-28 rounded-lg border border-white/10 bg-black/24 p-7">
-              <service.icon size={34} className="text-cyan-300" />
-              <h2 className="mt-8 text-3xl font-semibold text-white">What exactly we do</h2>
-              <p className="mt-4 text-sm leading-7 text-slate-400">{service.summary}</p>
+            <div className="sticky top-28 overflow-hidden rounded-lg border border-white/10 bg-black/24">
+              <div className="relative aspect-[16/10] overflow-hidden border-b border-white/10">
+                <Image src={servicePhoto} alt={`${service.title} team and systems`} fill sizes="(min-width: 1024px) 36vw, 100vw" className="object-cover opacity-86" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/18 to-transparent" />
+                <service.icon size={34} className="absolute bottom-5 left-5 text-cyan-300" />
+              </div>
+              <div className="p-7">
+                <h2 className="text-3xl font-semibold text-white">What exactly we do</h2>
+                <p className="mt-4 text-sm leading-7 text-slate-400">{service.summary}</p>
               <div className="mt-8 grid gap-3">
                 {service.items.map((item) => (
                   <div key={item} className="flex items-center gap-3 rounded-md border border-white/10 bg-white/[0.035] p-4 text-sm text-slate-200">
@@ -118,6 +129,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
                     {item}
                   </div>
                 ))}
+              </div>
               </div>
             </div>
           </Reveal>

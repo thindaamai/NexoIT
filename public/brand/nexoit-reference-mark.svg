@@ -1,0 +1,17 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">NEXOIT clean N mark</title>
+  <desc id="desc">A clean cyan N mark with a small data-stream detail.</desc>
+  <defs>
+    <linearGradient id="cyan" x1="62" y1="60" x2="178" y2="180" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A5F3FC"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="240" height="240" rx="40" fill="#050607"/>
+  <path d="M65 170V70L175 170V70" stroke="url(#cyan)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M94 92H163" stroke="#A5F3FC" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round"/>
+  <path d="M106 111H176" stroke="#A5F3FC" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="163" cy="92" r="4" fill="#A5F3FC"/>
+  <circle cx="176" cy="111" r="3.5" fill="#22D3EE"/>
+</svg>

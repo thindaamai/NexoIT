@@ -1,107 +1,48 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { ArrowRight, ChevronDown, Menu, PhoneCall } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ArrowRight, Menu, PhoneCall } from "lucide-react";
 import { services } from "@/lib/site-data";
 
 const companyLinks = [
-  { href: "/packages", label: "Packages" },
-  { href: "/about", label: "About" },
-  { href: "/industries", label: "Industries" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About Us" },
 ];
 
 export function Header() {
-  const [openMenu, setOpenMenu] = useState<"services" | "company" | null>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  function openDropdown(menu: "services" | "company") {
-    if (closeTimer.current) {
-      clearTimeout(closeTimer.current);
-    }
-    setOpenMenu(menu);
-  }
-
-  function closeDropdownSoon() {
-    closeTimer.current = setTimeout(() => setOpenMenu(null), 180);
-  }
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#050607]/82 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-5 sm:py-4 lg:px-8">
         <Link href="/" className="group flex items-center gap-3" aria-label="NEXOIT home">
-          <span className="grid size-10 place-items-center rounded-md border border-white/12 bg-white text-base font-black text-black transition-transform duration-300 group-hover:rotate-3">
-            N
-          </span>
-          <span>
-            <span className="block text-sm font-semibold tracking-[0.28em] text-white">NEXOIT</span>
-            <span className="block text-xs text-slate-400">Networks. Cloud. Security.</span>
-          </span>
+          <Image
+            src="/brand/nexoit-logo-clean.svg"
+            alt="NEXOIT"
+            width={174}
+            height={40}
+            priority
+            className="h-7 w-auto transition-opacity duration-300 group-hover:opacity-85 sm:h-10"
+          />
         </Link>
 
-        <nav className="hidden items-center gap-1 rounded-md border border-white/10 bg-white/[0.03] p-1 md:flex">
-          <Link href="/" className="rounded px-4 py-2 text-sm text-slate-300 transition hover:bg-white/8 hover:text-white">
+        <nav className="hidden items-center gap-2 md:flex">
+          <Link href="/" className={navLinkClass(pathname === "/")}>
             Home
           </Link>
-
-          <Dropdown
-            label="Services"
-            open={openMenu === "services"}
-            onOpen={() => openDropdown("services")}
-            onClose={closeDropdownSoon}
-            onToggle={() => setOpenMenu((current) => (current === "services" ? null : "services"))}
-            width="w-72"
-          >
+          {services.map((service) => (
             <Link
-              href="/services"
-              onClick={() => setOpenMenu(null)}
-              className="mb-1 flex items-center justify-between rounded-md px-3 py-3 text-sm font-medium text-cyan-200 transition hover:bg-cyan-300/10 hover:text-white"
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              className={navLinkClass(pathname === `/services/${service.slug}`)}
             >
-              Services overview
-              <ArrowRight size={15} />
+              {service.title}
             </Link>
-            <div className="h-px bg-white/10" />
-            <div className="mt-1 grid gap-1">
-              {services.map((service) => (
-                <Link
-                  key={service.slug}
-                  href={`/services/${service.slug}`}
-                  onClick={() => setOpenMenu(null)}
-                  className="group/item flex items-center justify-between rounded-md px-3 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/8 hover:text-white"
-                >
-                  <span className="flex items-center gap-3">
-                    <service.icon size={16} className="text-cyan-300 transition group-hover/item:scale-110" />
-                    {service.title}
-                  </span>
-                  <ArrowRight size={14} className="text-slate-500 transition group-hover/item:translate-x-0.5 group-hover/item:text-cyan-200" />
-                </Link>
-              ))}
-            </div>
-          </Dropdown>
-
-          <Dropdown
-            label="Company"
-            open={openMenu === "company"}
-            onOpen={() => openDropdown("company")}
-            onClose={closeDropdownSoon}
-            onToggle={() => setOpenMenu((current) => (current === "company" ? null : "company"))}
-            width="w-56"
-          >
-            <div className="grid gap-1">
-              {companyLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpenMenu(null)}
-                  className="group/item flex items-center justify-between rounded-md px-3 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/8 hover:text-white"
-                >
-                  {link.label}
-                  <ArrowRight size={14} className="text-slate-500 transition group-hover/item:translate-x-0.5 group-hover/item:text-cyan-200" />
-                </Link>
-              ))}
-            </div>
-          </Dropdown>
+          ))}
+          <Link href="/about" className={navLinkClass(pathname === "/about")}>
+            About Us
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -109,30 +50,23 @@ export function Header() {
             Talk to us
           </Link>
           <details className="group relative md:hidden">
-            <summary className="grid size-10 cursor-pointer list-none place-items-center rounded-md border border-white/12 text-slate-200 [&::-webkit-details-marker]:hidden" aria-label="Open menu">
+            <summary className="grid size-9 cursor-pointer list-none place-items-center rounded-md border border-white/12 bg-white/[0.03] text-slate-200 [&::-webkit-details-marker]:hidden" aria-label="Open menu">
               <Menu size={18} />
             </summary>
-            <div className="absolute right-0 mt-3 grid w-60 gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
-              <Link href="/" className="rounded px-3 py-2 text-sm text-slate-300 transition hover:bg-white/8 hover:text-white">
+            <div className="absolute right-0 mt-3 grid w-[min(82vw,300px)] gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
+              <Link href="/" className={mobileLinkClass(pathname === "/")}>
                 Home
               </Link>
               <MobileGroup title="Services">
-                <Link href="/services" className="rounded px-3 py-2 text-xs text-cyan-200 transition hover:bg-cyan-300/10">
-                  Services overview
-                </Link>
                 {services.map((service) => (
-                  <Link key={service.slug} href={`/services/${service.slug}`} className="rounded px-3 py-2 text-xs text-slate-400 transition hover:bg-cyan-300/10 hover:text-cyan-200">
+                  <Link key={service.slug} href={`/services/${service.slug}`} className={mobileLinkClass(pathname === `/services/${service.slug}`)}>
                     {service.title}
                   </Link>
                 ))}
               </MobileGroup>
-              <MobileGroup title="Company">
-                {companyLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="rounded px-3 py-2 text-xs text-slate-400 transition hover:bg-cyan-300/10 hover:text-cyan-200">
-                    {link.label}
-                  </Link>
-                ))}
-              </MobileGroup>
+              <Link href="/about" className={mobileLinkClass(pathname === "/about")}>
+                About Us
+              </Link>
             </div>
           </details>
         </div>
@@ -141,45 +75,20 @@ export function Header() {
   );
 }
 
-function Dropdown({
-  label,
-  open,
-  onOpen,
-  onClose,
-  onToggle,
-  width,
-  children,
-}: {
-  label: string;
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  onToggle: () => void;
-  width: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-haspopup="true"
-        onClick={onToggle}
-        className="flex items-center gap-1 rounded px-4 py-2 text-sm text-slate-300 transition hover:bg-white/8 hover:text-white"
-      >
-        {label}
-        <ChevronDown size={14} className={`transition ${open ? "rotate-180" : ""}`} />
-      </button>
-      <div
-        onMouseEnter={onOpen}
-        className={`absolute left-1/2 top-[calc(100%-1px)] z-50 ${width} -translate-x-1/2 rounded-lg border border-white/10 bg-[#090b0e]/98 p-2 shadow-2xl shadow-black/40 backdrop-blur-xl transition duration-200 ${
-          open ? "visible translate-y-1 opacity-100" : "invisible translate-y-3 opacity-0"
-        }`}
-      >
-        {children}
-      </div>
-    </div>
-  );
+function navLinkClass(active: boolean) {
+  return `rounded-md px-4 py-2 text-sm transition ${
+    active
+      ? "bg-white text-black shadow-[0_0_28px_rgba(255,255,255,0.16)]"
+      : "text-slate-300 hover:bg-white/8 hover:text-white"
+  }`;
+}
+
+function mobileLinkClass(active: boolean) {
+  return `rounded px-3 py-2 text-sm transition ${
+    active
+      ? "bg-white text-black"
+      : "text-slate-300 hover:bg-white/8 hover:text-white"
+  }`;
 }
 
 function MobileGroup({ title, children }: { title: string; children: React.ReactNode }) {
@@ -194,9 +103,9 @@ function MobileGroup({ title, children }: { title: string; children: React.React
 export function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#050607]">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:grid-cols-2 lg:grid-cols-[1.2fr_0.75fr_0.9fr_1fr] lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.75fr_0.9fr_1fr] lg:px-8 lg:py-12">
         <div>
-          <div className="mb-4 text-2xl font-black tracking-tight">NEXOIT</div>
+          <div className="mb-3 text-xl font-black tracking-tight sm:text-2xl">NEXOIT</div>
           <p className="max-w-md text-sm leading-6 text-slate-400">
             Practical IT, cloud, security, and engineering services for Australian SMBs that need calm systems and clear handover.
           </p>
@@ -215,7 +124,6 @@ export function Footer() {
         <div>
           <div className="mb-4 text-sm font-semibold text-white">Services</div>
           <div className="grid gap-2">
-            <Link href="/services" className="text-sm text-cyan-200 transition hover:text-white">Overview</Link>
             {services.map((service) => (
               <Link key={service.slug} href={`/services/${service.slug}`} className="text-sm text-slate-400 transition hover:text-cyan-200">
                 {service.title}
@@ -225,7 +133,7 @@ export function Footer() {
         </div>
         <div>
           <div className="mb-4 text-sm font-semibold text-white">Start a conversation</div>
-          <Link href="/contact" className="inline-flex items-center gap-2 rounded-md border border-white/12 px-4 py-3 text-sm text-white transition hover:border-cyan-300/60 hover:bg-cyan-300/10">
+          <Link href="/contact" className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/12 px-4 py-3 text-sm text-white transition hover:border-cyan-300/60 hover:bg-cyan-300/10 sm:w-auto">
             <PhoneCall size={16} />
             Book a consultation
             <ArrowRight size={16} />
@@ -253,10 +161,10 @@ export function PageHero({
 }) {
   return (
     <section className="border-b border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.12),transparent_34%),#050607]">
-      <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-8">
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">{eyebrow}</p>
-        <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl">{title}</h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">{copy}</p>
+        <h1 className="max-w-4xl text-[2.65rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-5xl md:text-7xl">{title}</h1>
+        <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:mt-6 sm:text-lg sm:leading-8">{copy}</p>
       </div>
     </section>
   );

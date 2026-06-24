@@ -6,12 +6,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   ArrowRight,
+  Code2,
   Home,
   LayoutGrid,
   Menu,
   PhoneCall,
   Server,
-  ShieldCheck,
   X,
 } from "lucide-react";
 import { services } from "@/lib/site-data";
@@ -20,7 +20,7 @@ const mobileTabs = [
   { href: "/", label: "Home", icon: Home },
   { href: "/services/business-essentials", label: "Solutions", icon: LayoutGrid },
   { href: "/services/cloud-services", label: "Infra", icon: Server },
-  { href: "/services/professional-services", label: "Secure", icon: ShieldCheck },
+  { href: "/services/web-development", label: "Web", icon: Code2 },
   { href: "/contact", label: "Contact", icon: PhoneCall },
 ];
 

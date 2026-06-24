@@ -73,7 +73,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/contact"
+                href="/contact#enquiry-form"
                 className="inline-flex items-center justify-center gap-2 rounded bg-white px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition hover:-translate-y-0.5 hover:bg-cyan-200"
                 data-testid="hero-cta-primary"
               >
@@ -294,7 +294,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
             advantage rather than a friction point.
           </p>
           <Link
-            href="/contact"
+            href="/contact#enquiry-form"
             className="mt-8 inline-flex items-center gap-2 rounded bg-white px-6 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition hover:-translate-y-0.5 hover:bg-cyan-200"
             data-testid="cta-consultation"
           >

@@ -136,7 +136,7 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <Link
-            href="/contact"
+            href="/contact#enquiry-form"
             className="hidden rounded bg-cyan-400 px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-black transition hover:-translate-y-0.5 hover:bg-cyan-300 sm:inline-flex"
             data-testid="nav-consultation"
           >
@@ -169,7 +169,7 @@ export function Header() {
                     </Link>
                   ))}
                 </MobileGroup>
-                <Link href="/contact" onClick={() => setMenuOpen(false)} className="rounded bg-cyan-400 px-3 py-2 text-center text-sm font-semibold text-black">
+                <Link href="/contact#enquiry-form" onClick={() => setMenuOpen(false)} className="rounded bg-cyan-400 px-3 py-2 text-center text-sm font-semibold text-black">
                   Consultation
                 </Link>
               </div>
@@ -241,7 +241,7 @@ export function Footer() {
         <div>
           <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white">Start a conversation</div>
           <Link
-            href="/contact"
+            href="/contact#enquiry-form"
             className="inline-flex w-full items-center justify-center gap-2 rounded border border-white/12 px-4 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition hover:border-cyan-300/60 hover:bg-cyan-300/10 sm:w-auto"
             data-testid="footer-consultation"
           >

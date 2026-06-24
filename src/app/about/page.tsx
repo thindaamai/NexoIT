@@ -162,7 +162,7 @@ export default function AboutPage() {
               Bring practical engineering into your next technology project.
             </h2>
           </div>
-          <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
+          <Link href="/contact#enquiry-form" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
             Start a conversation <ArrowRight size={17} />
           </Link>
         </Reveal>

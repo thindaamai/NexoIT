@@ -18,7 +18,7 @@ export function SeoHero({
         <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">{eyebrow}</p>
         <h1 className="max-w-5xl text-5xl font-semibold leading-[0.98] tracking-tight text-white md:text-7xl">{title}</h1>
         <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{copy}</p>
-        <Link href="/contact" className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
+        <Link href="/contact#enquiry-form" className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
           {cta} <ArrowRight size={17} />
         </Link>
       </div>

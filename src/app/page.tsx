@@ -52,7 +52,7 @@ export default function Home() {
                 From managed IT infrastructure to professional websites and Microsoft 365 &mdash; we handle your tech so you can focus on running your business.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-6 sm:mt-9">
-                <Link href="/contact" className="group inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">
+                <Link href="/contact#enquiry-form" className="group inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">
                   Talk to us <ArrowRight size={17} className="transition group-hover:translate-x-0.5" />
                 </Link>
                 <Link href="#services" className="inline-flex items-center justify-center gap-2 rounded-md border border-white/12 bg-white/[0.02] px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/50 hover:bg-white/8">

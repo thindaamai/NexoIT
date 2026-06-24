@@ -79,7 +79,7 @@ export default async function ResourcePage({ params }: PageProps) {
               Share your current environment and NEXOIT will map the scope, timeline, and handover requirements.
             </p>
           </div>
-          <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
+          <Link href="/contact#enquiry-form" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
             Talk to us <ArrowRight size={17} />
           </Link>
         </div>

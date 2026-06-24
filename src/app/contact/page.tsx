@@ -38,7 +38,7 @@ export default function ContactPage() {
             </div>
           </Reveal>
           <Reveal delay={0.08}>
-            <form className="rounded-lg border border-white/10 bg-white/[0.035] p-7">
+            <form id="enquiry-form" className="scroll-mt-24 rounded-lg border border-white/10 bg-white/[0.035] p-7 md:scroll-mt-28">
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="grid gap-2 text-sm text-slate-300">
                   Name

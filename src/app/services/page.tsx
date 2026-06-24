@@ -50,7 +50,7 @@ export default function ServicesPage() {
             <p className="mt-6 text-lg leading-8 text-slate-300">
               The approach borrows the best parts of managed service providers, cyber consultancies, and engineering teams: predictable communication, clean documentation, and systems your staff can actually use.
             </p>
-            <Link href="/contact" className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
+            <Link href="/contact#enquiry-form" className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
               Discuss requirements <ArrowRight size={17} />
             </Link>
           </Reveal>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +12,7 @@ import {
   PhoneCall,
   Server,
   ShieldCheck,
+  X,
 } from "lucide-react";
 import { services } from "@/lib/site-data";
 
@@ -70,6 +72,34 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close the mobile menu whenever the route changes.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // Close on click/tap outside the menu and on Escape.
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    function handlePointer(event: MouseEvent | TouchEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setMenuOpen(false);
+    }
+
+    document.addEventListener("pointerdown", handlePointer);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointer);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [menuOpen]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#050607]/82 backdrop-blur-xl">
@@ -112,30 +142,39 @@ export function Header() {
           >
             Consultation
           </Link>
-          <details className="group relative md:hidden">
-            <summary className="grid size-9 cursor-pointer list-none place-items-center rounded-md border border-white/12 bg-white/[0.03] text-slate-200 [&::-webkit-details-marker]:hidden" aria-label="Open menu">
-              <Menu size={18} />
-            </summary>
-            <div className="absolute right-0 mt-3 grid w-[min(82vw,300px)] gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
-              <MobileGroup title="Navigation">
-                {navLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className={mobileLinkClass(pathname === link.href)}>
-                    {link.label}
-                  </Link>
-                ))}
-              </MobileGroup>
-              <MobileGroup title="Services">
-                {services.map((service) => (
-                  <Link key={service.slug} href={`/services/${service.slug}`} className={mobileLinkClass(pathname === `/services/${service.slug}`)}>
-                    {service.title}
-                  </Link>
-                ))}
-              </MobileGroup>
-              <Link href="/contact" className="rounded bg-cyan-400 px-3 py-2 text-center text-sm font-semibold text-black">
-                Consultation
-              </Link>
-            </div>
-          </details>
+          <div ref={menuRef} className="relative md:hidden">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="grid size-9 cursor-pointer place-items-center rounded-md border border-white/12 bg-white/[0.03] text-slate-200"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              data-testid="mobile-menu-toggle"
+            >
+              {menuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+            {menuOpen && (
+              <div className="absolute right-0 mt-3 grid w-[min(82vw,300px)] gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
+                <MobileGroup title="Navigation">
+                  {navLinks.map((link) => (
+                    <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className={mobileLinkClass(pathname === link.href)}>
+                      {link.label}
+                    </Link>
+                  ))}
+                </MobileGroup>
+                <MobileGroup title="Services">
+                  {services.map((service) => (
+                    <Link key={service.slug} href={`/services/${service.slug}`} onClick={() => setMenuOpen(false)} className={mobileLinkClass(pathname === `/services/${service.slug}`)}>
+                      {service.title}
+                    </Link>
+                  ))}
+                </MobileGroup>
+                <Link href="/contact" onClick={() => setMenuOpen(false)} className="rounded bg-cyan-400 px-3 py-2 text-center text-sm font-semibold text-black">
+                  Consultation
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

@@ -55,13 +55,13 @@ export function CapabilitiesGrid({
   capabilities: Capability[];
 }) {
   return (
-    <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+    <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
       {capabilities.map((item) => {
         const Icon = item.icon;
         return (
           <div
             key={item.label}
-            className="flex flex-col items-center gap-3 rounded-lg border border-white/10 bg-white/[0.035] p-5 text-center transition hover:border-cyan-300/30 hover:bg-cyan-300/[0.06]"
+            className="flex w-[calc(50%-0.375rem)] flex-col items-center gap-3 rounded-lg border border-white/10 bg-white/[0.035] p-5 text-center transition hover:border-cyan-300/30 hover:bg-cyan-300/[0.06] sm:w-[calc(33.333%-0.5rem)] md:w-40"
             data-testid={`capability-${item.label.toLowerCase()}`}
           >
             <Icon size={24} className="text-white" />

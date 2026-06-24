@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Outfit } from "next/font/google";
-import { Footer, Header } from "@/components/site-shell";
+import { Footer, Header, MobileTabBar } from "@/components/site-shell";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -43,10 +43,11 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${plusJakarta.variable} ${outfit.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <MobileTabBar />
       </body>
     </html>
   );

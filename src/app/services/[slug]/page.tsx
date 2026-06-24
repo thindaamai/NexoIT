@@ -21,16 +21,6 @@ const servicePhotos: Record<string, string> = {
   "cloud-services": "/service-photos/cloud-services.jpg",
 };
 
-const workflowLabels: Record<string, string[]> = {
-  "business-essentials": [
-    "Assess",
-    "Translate",
-    "Build",
-    "Handover",
-    "Support",
-  ],
-};
-
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
 }
@@ -58,7 +48,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
   }
 
   const servicePhoto = servicePhotos[service.slug] ?? service.image;
-  const labels = workflowLabels[service.slug];
+  const labels = service.workflowLabels;
 
   return (
     <>
@@ -214,7 +204,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
             </h2>
           </Reveal>
 
-          <CapabilitiesGrid slug={service.slug} fallbackItems={service.items} />
+          <CapabilitiesGrid capabilities={service.capabilities} />
         </div>
       </section>
 

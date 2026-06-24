@@ -67,6 +67,7 @@ const navLinks = [
   { href: "/services/business-essentials", label: "Solutions" },
   { href: "/services/cloud-services", label: "Infrastructure" },
   { href: "/services/professional-services", label: "Sovereignty" },
+  { href: "/services/web-development", label: "Web Development" },
   { href: "/about", label: "Timeline" },
 ];
 

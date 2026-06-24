@@ -83,7 +83,7 @@ export default function AboutPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-200">Delivery model</p>
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200">Delivery model</p>
                 <h2 className="mt-3 max-w-xl text-3xl font-semibold tracking-tight text-white">
                   Clear setup, practical handover, reliable support.
                 </h2>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">How we work</p>
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">How we work</p>
             <h2 className="max-w-2xl text-4xl font-semibold tracking-tight text-white">
               We keep technology work visible from first scope to final handover.
             </h2>
@@ -111,7 +111,7 @@ export default function AboutPage() {
       <section className="bg-[#050607] px-5 py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <Reveal className="mb-10">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Capabilities</p>
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Capabilities</p>
             <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-white">
               One team for the technology layers that usually get split between vendors.
             </h2>
@@ -133,7 +133,7 @@ export default function AboutPage() {
       <section className="bg-[#0b0d10] px-5 py-20 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 rounded-lg border border-white/10 bg-white/[0.025] p-8 lg:grid-cols-[0.9fr_1.1fr] lg:p-12">
           <Reveal>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Partner ecosystem</p>
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Partner ecosystem</p>
             <h2 className="text-4xl font-semibold tracking-tight text-white">
               Built around the platforms your business already uses.
             </h2>
@@ -157,7 +157,7 @@ export default function AboutPage() {
       <section className="bg-[#050607] px-5 py-20 lg:px-8">
         <Reveal className="mx-auto flex max-w-7xl flex-col justify-between gap-6 rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,0.12),rgba(16,185,129,0.06),transparent)] p-8 md:flex-row md:items-center md:p-12">
           <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Work with us</p>
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">Work with us</p>
             <h2 className="max-w-2xl text-4xl font-semibold tracking-tight text-white">
               Bring practical engineering into your next technology project.
             </h2>

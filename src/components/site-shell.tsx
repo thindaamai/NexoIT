@@ -3,8 +3,59 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Menu, PhoneCall } from "lucide-react";
+import {
+  ArrowRight,
+  Home,
+  LayoutGrid,
+  Menu,
+  PhoneCall,
+  Server,
+  ShieldCheck,
+} from "lucide-react";
 import { services } from "@/lib/site-data";
+
+const mobileTabs = [
+  { href: "/", label: "Home", icon: Home },
+  { href: "/services/business-essentials", label: "Solutions", icon: LayoutGrid },
+  { href: "/services/cloud-services", label: "Infra", icon: Server },
+  { href: "/services/professional-services", label: "Secure", icon: ShieldCheck },
+  { href: "/contact", label: "Contact", icon: PhoneCall },
+];
+
+export function MobileTabBar() {
+  const pathname = usePathname();
+
+  return (
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0b0d10]/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
+      data-testid="mobile-tabbar"
+      aria-label="Primary mobile navigation"
+    >
+      <div className="mx-auto flex max-w-md items-stretch justify-around px-2">
+        {mobileTabs.map((tab) => {
+          const isActive = pathname === tab.href;
+          const Icon = tab.icon;
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className={`flex flex-1 flex-col items-center gap-1 py-2.5 transition ${
+                isActive ? "text-cyan-300" : "text-slate-400 hover:text-white"
+              }`}
+              data-testid={`mobile-tab-${tab.label.toLowerCase()}`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              <Icon size={20} />
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.1em]">
+                {tab.label}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
 
 const companyLinks = [
   { href: "/about", label: "About Us" },
@@ -182,7 +233,7 @@ export function PageHero({
   return (
     <section className="border-b border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.12),transparent_34%),#050607]">
       <div className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-8">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">{eyebrow}</p>
+        <p className="mb-4 font-mono text-xs font-semibold uppercase tracking-[0.28em] text-cyan-300">{eyebrow}</p>
         <h1 className="max-w-4xl text-[2.65rem] font-semibold leading-[0.98] tracking-tight text-white sm:text-5xl md:text-7xl">{title}</h1>
         <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:mt-6 sm:text-lg sm:leading-8">{copy}</p>
       </div>

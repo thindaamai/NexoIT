@@ -9,8 +9,16 @@ import {
   Globe2,
   Headphones,
   LockKeyhole,
+  Mail,
+  MessageSquare,
+  FileText,
+  AppWindow,
   Network,
   ShieldCheck,
+  HardDrive,
+  Monitor,
+  UserPlus,
+  Wrench,
   Users,
   Wifi,
 } from "lucide-react";
@@ -48,7 +56,7 @@ export const services = [
     projectExamples: ["New office IT setup", "Email migration and MFA rollout", "Network and WiFi refresh"],
     audience: "Owners and operations teams opening a new office, modernising old systems, or moving staff into a secure Microsoft 365 environment.",
     problems: ["Email, files, devices, and network tools are managed separately", "New users take too long to onboard", "Backups, MFA, and endpoint protection are not consistent", "Credentials and handover notes are scattered"],
-    workflow: ["Audit current users, domains, devices, network, and data", "Design the license, hardware, security, and backup plan", "Procure and configure Microsoft 365, Teams, email, SharePoint, devices, firewall, and WiFi", "Migrate data, train staff, document access, and provide post-setup support"],
+    workflow: ["Audit current users, domains, devices, network, and data", "Design the license, hardware, security, and backup plan", "Configure Microsoft 365, Teams, Email, and Cloud Infrastructure", "Migrate data, train staff, document credentials, and handover", "On-demand technical resolution and production fleet management"],
     metrics: ["M365", "MFA", "Backup", "WiFi"],
   },
   {
@@ -159,6 +167,19 @@ export const capabilities = [
   { label: "Cloud networking", icon: Cloud },
   { label: "Backup and DR", icon: DatabaseBackup },
   { label: "Support", icon: Headphones },
+];
+
+export const businessEssentialsCapabilities = [
+  { label: "Email", icon: Mail },
+  { label: "Chat", icon: MessageSquare },
+  { label: "Files", icon: FileText },
+  { label: "Office", icon: AppWindow },
+  { label: "Network", icon: Network },
+  { label: "Security", icon: ShieldCheck },
+  { label: "Backup", icon: HardDrive },
+  { label: "Devices", icon: Monitor },
+  { label: "Onboarding", icon: UserPlus },
+  { label: "Services", icon: Wrench },
 ];
 
 export const founders = [

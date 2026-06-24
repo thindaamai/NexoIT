@@ -10,6 +10,13 @@ const companyLinks = [
   { href: "/about", label: "About Us" },
 ];
 
+const navLinks = [
+  { href: "/services/business-essentials", label: "Solutions" },
+  { href: "/services/cloud-services", label: "Infrastructure" },
+  { href: "/services/professional-services", label: "Sovereignty" },
+  { href: "/about", label: "Timeline" },
+];
+
 export function Header() {
   const pathname = usePathname();
 
@@ -27,30 +34,45 @@ export function Header() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-2 md:flex">
-          {services.map((service) => (
-            <Link
-              key={service.slug}
-              href={`/services/${service.slug}`}
-              className={navLinkClass(pathname === `/services/${service.slug}`)}
-            >
-              {service.title}
-            </Link>
-          ))}
-          <Link href="/about" className={navLinkClass(pathname === "/about")}>
-            About Us
-          </Link>
+        <nav className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`rounded-md px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] transition ${
+                  isActive
+                    ? "text-cyan-300"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/contact" className="hidden rounded-md bg-white px-4 py-2 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200 sm:inline-flex">
-            Talk to us
+          <Link
+            href="/contact"
+            className="hidden rounded bg-cyan-400 px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-black transition hover:-translate-y-0.5 hover:bg-cyan-300 sm:inline-flex"
+            data-testid="nav-consultation"
+          >
+            Consultation
           </Link>
           <details className="group relative md:hidden">
             <summary className="grid size-9 cursor-pointer list-none place-items-center rounded-md border border-white/12 bg-white/[0.03] text-slate-200 [&::-webkit-details-marker]:hidden" aria-label="Open menu">
               <Menu size={18} />
             </summary>
             <div className="absolute right-0 mt-3 grid w-[min(82vw,300px)] gap-2 rounded-lg border border-white/10 bg-[#0b0d10] p-2 shadow-2xl">
+              <MobileGroup title="Navigation">
+                {navLinks.map((link) => (
+                  <Link key={link.href} href={link.href} className={mobileLinkClass(pathname === link.href)}>
+                    {link.label}
+                  </Link>
+                ))}
+              </MobileGroup>
               <MobileGroup title="Services">
                 {services.map((service) => (
                   <Link key={service.slug} href={`/services/${service.slug}`} className={mobileLinkClass(pathname === `/services/${service.slug}`)}>
@@ -58,8 +80,8 @@ export function Header() {
                   </Link>
                 ))}
               </MobileGroup>
-              <Link href="/about" className={mobileLinkClass(pathname === "/about")}>
-                About Us
+              <Link href="/contact" className="rounded bg-cyan-400 px-3 py-2 text-center text-sm font-semibold text-black">
+                Consultation
               </Link>
             </div>
           </details>
@@ -105,7 +127,7 @@ export function Footer() {
           </p>
         </div>
         <div>
-          <div className="mb-4 text-sm font-semibold text-white">Navigation</div>
+          <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white">Navigation</div>
           <div className="grid gap-2">
             <Link href="/" className="text-sm text-slate-400 transition hover:text-white">Home</Link>
             {companyLinks.map((link) => (
@@ -113,10 +135,11 @@ export function Footer() {
                 {link.label}
               </Link>
             ))}
+            <Link href="/contact" className="text-sm text-slate-400 transition hover:text-white">Contact</Link>
           </div>
         </div>
         <div>
-          <div className="mb-4 text-sm font-semibold text-white">Services</div>
+          <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white">Services</div>
           <div className="grid gap-2">
             {services.map((service) => (
               <Link key={service.slug} href={`/services/${service.slug}`} className="text-sm text-slate-400 transition hover:text-cyan-200">
@@ -126,18 +149,21 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <div className="mb-4 text-sm font-semibold text-white">Start a conversation</div>
-          <Link href="/contact" className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/12 px-4 py-3 text-sm text-white transition hover:border-cyan-300/60 hover:bg-cyan-300/10 sm:w-auto">
-            <PhoneCall size={16} />
+          <div className="mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-white">Start a conversation</div>
+          <Link
+            href="/contact"
+            className="inline-flex w-full items-center justify-center gap-2 rounded border border-white/12 px-4 py-3 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition hover:border-cyan-300/60 hover:bg-cyan-300/10 sm:w-auto"
+            data-testid="footer-consultation"
+          >
             Book a consultation
-            <ArrowRight size={16} />
+            <ArrowRight size={14} />
           </Link>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between lg:px-8">
           <p>© {new Date().getFullYear()} NEXOIT. All rights reserved.</p>
-          <p>Built for Australian SMB technology delivery.</p>
+          <p className="font-mono text-[10px] uppercase tracking-wider">Built for knowledge and technology re-code</p>
         </div>
       </div>
     </footer>

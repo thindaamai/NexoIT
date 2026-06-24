@@ -1,8 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, CheckCircle2, CircleDot, Layers3 } from "lucide-react";
+import { ChevronDown, CircleDot, Layers3 } from "lucide-react";
 import { Reveal } from "@/components/motion-primitives";
+import {
+  WorkflowGrid,
+  CapabilitiesGrid,
+  EngagementRow,
+} from "@/components/service-sections";
 import { services } from "@/lib/site-data";
 
 type ServicePageProps = {
@@ -16,6 +21,16 @@ const servicePhotos: Record<string, string> = {
   "cloud-services": "/service-photos/cloud-services.jpg",
 };
 
+const workflowLabels: Record<string, string[]> = {
+  "business-essentials": [
+    "Assess",
+    "Translate",
+    "Build",
+    "Handover",
+    "Support",
+  ],
+};
+
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
 }
@@ -25,9 +40,7 @@ export async function generateMetadata({ params }: ServicePageProps) {
   const service = services.find((item) => item.slug === slug);
 
   if (!service) {
-    return {
-      title: "Service",
-    };
+    return { title: "Service" };
   }
 
   return {
@@ -45,24 +58,43 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
   }
 
   const servicePhoto = servicePhotos[service.slug] ?? service.image;
+  const labels = workflowLabels[service.slug];
 
   return (
     <>
+      {/* ── Hero ── */}
       <section className="overflow-hidden border-b border-white/10 bg-[#050607]">
-        <div className="mx-auto grid min-h-[620px] max-w-7xl gap-12 px-5 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
           <Reveal>
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.28em] text-cyan-300">Service</p>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-tight text-white md:text-7xl">
+            <p
+              className="mb-5 font-mono text-xs font-semibold uppercase tracking-[0.28em] text-cyan-300"
+              data-testid="service-eyebrow"
+            >
+              Service
+            </p>
+            <h1
+              className="max-w-xl text-5xl font-semibold leading-[0.98] tracking-tight text-white md:text-7xl"
+              data-testid="service-title"
+            >
               {service.title}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">{service.detail}</p>
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-400">{service.audience}</p>
+            <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+              {service.detail}
+            </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
-                Scope this service <ArrowRight size={17} />
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 rounded bg-white px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition hover:-translate-y-0.5 hover:bg-cyan-200"
+                data-testid="hero-cta-primary"
+              >
+                Request consultation
               </Link>
-              <Link href="/services" className="inline-flex items-center justify-center gap-2 rounded-md border border-white/12 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/50 hover:bg-white/8">
-                All services
+              <Link
+                href="#capabilities"
+                className="inline-flex items-center justify-center gap-2 rounded border border-white/12 px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:border-cyan-300/50 hover:bg-white/8"
+                data-testid="hero-cta-secondary"
+              >
+                View capabilities
               </Link>
             </div>
           </Reveal>
@@ -79,156 +111,207 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/18 to-transparent" />
               <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Service environment</p>
-                <h2 className="mt-2 max-w-lg text-2xl font-semibold text-white">{service.title}</h2>
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-cyan-200">
+                  Service environment
+                </p>
+                <h2 className="mt-2 max-w-lg text-xl font-semibold text-white sm:text-2xl">
+                  {service.title}
+                </h2>
               </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-[#050607] px-5 py-20 lg:px-8">
+      {/* ── Our Approach / Workflow ── */}
+      <section className="border-b border-white/10 bg-[#050607] px-5 py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <Reveal className="mb-10">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">What we solve</p>
-            <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-white">
-              Clear fixes for the operational problems behind {service.title.toLowerCase()}.
+          <Reveal className="mb-12">
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">
+              Our approach
+            </p>
+            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
+              We take a structured approach that turns your business needs into
+              a solid, secure IT foundation.
             </h2>
           </Reveal>
-          <div className="grid gap-4 md:grid-cols-2">
-            {service.problems.map((problem, index) => (
-              <Reveal key={problem} delay={index * 0.04}>
-                <div className="flex h-full gap-4 rounded-lg border border-white/10 bg-white/[0.035] p-5">
-                  <span className="grid size-9 shrink-0 place-items-center rounded bg-cyan-300 text-sm font-semibold text-black">
-                    {index + 1}
-                  </span>
-                  <p className="text-sm leading-6 text-slate-300">{problem}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+
+          <WorkflowGrid steps={service.workflow} labels={labels} />
         </div>
       </section>
 
-      <section className="bg-[#0b0d10] px-5 py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <Reveal>
-            <div className="sticky top-28 overflow-hidden rounded-lg border border-white/10 bg-black/24">
-              <div className="relative aspect-[16/10] overflow-hidden border-b border-white/10">
-                <Image src={servicePhoto} alt={`${service.title} team and systems`} fill sizes="(min-width: 1024px) 36vw, 100vw" className="object-cover opacity-86" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/18 to-transparent" />
-                <service.icon size={34} className="absolute bottom-5 left-5 text-cyan-300" />
-              </div>
-              <div className="p-7">
-                <h2 className="text-3xl font-semibold text-white">What exactly we do</h2>
-                <p className="mt-4 text-sm leading-7 text-slate-400">{service.summary}</p>
-              <div className="mt-8 grid gap-3">
-                {service.items.map((item) => (
-                  <div key={item} className="flex items-center gap-3 rounded-md border border-white/10 bg-white/[0.035] p-4 text-sm text-slate-200">
-                    <CheckCircle2 size={16} className="text-cyan-300" />
-                    {item}
-                  </div>
-                ))}
-              </div>
-              </div>
-            </div>
+      {/* ── Ways We Work ── */}
+      <section className="border-b border-white/10 bg-[#0b0d10] px-5 py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <Reveal className="mb-10">
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">
+              Ways we work
+            </p>
+            <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Work with us the way that suits your business.
+            </h2>
           </Reveal>
 
-          <div className="grid gap-5">
+          <div className="grid gap-5 md:grid-cols-2">
             <Reveal>
-              <DetailBlock title="Products and platforms" items={service.products} />
+              <div
+                className="flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.035] p-7"
+                data-testid="work-mode-setup"
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="text-lg text-white">&#9881;</span>
+                  <h3 className="text-xl font-semibold text-white">
+                    Setup Architecture
+                  </h3>
+                </div>
+                <p className="mb-6 text-sm leading-6 text-slate-400">
+                  Foundational engineering projects designed for long-term
+                  operational stability.
+                </p>
+                <div className="mt-auto grid gap-3">
+                  <EngagementRow label="Project-based" />
+                  <EngagementRow label="Fixed contract" />
+                </div>
+              </div>
             </Reveal>
-            <Reveal delay={0.05}>
-              <DetailBlock title="Implementation scope" items={service.delivery} />
+            <Reveal delay={0.06}>
+              <div
+                className="flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.035] p-7"
+                data-testid="work-mode-support"
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="text-lg text-white">&#127911;</span>
+                  <h3 className="text-xl font-semibold text-white">
+                    Support Systems
+                  </h3>
+                </div>
+                <p className="mb-6 text-sm leading-6 text-slate-400">
+                  Continuous oversight and expert intervention for maintaining
+                  peak performance.
+                </p>
+                <div className="mt-auto grid gap-3">
+                  <EngagementRow label="Monthly retainer" />
+                  <EngagementRow label="On-demand resolution" />
+                </div>
+              </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#050607] px-5 py-20 lg:px-8">
+      {/* ── Capabilities ── */}
+      <section
+        id="capabilities"
+        className="border-b border-white/10 bg-[#050607] px-5 py-20 lg:px-8"
+      >
         <div className="mx-auto max-w-7xl">
-          <Reveal className="mb-10">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Delivery flow</p>
-            <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-white">
-              From assessment to handover, the work stays visible.
+          <Reveal className="mb-10 text-center">
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">
+              Capabilities
+            </p>
+            <h2 className="mx-auto max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Everything your business runs on, set up in one place.
             </h2>
           </Reveal>
-          <div className="grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 md:grid-cols-4">
-            {service.workflow.map((step, index) => (
-              <div key={step} className="bg-[#080a0c] p-6">
-                <div className="mb-10 flex items-center justify-between">
-                  <span className="grid size-9 place-items-center rounded bg-white text-sm font-semibold text-black">
-                    {index + 1}
-                  </span>
-                  <span className="h-px w-14 bg-gradient-to-r from-cyan-300 to-transparent" />
-                </div>
-                <p className="text-sm leading-6 text-slate-300">{step}</p>
-              </div>
-            ))}
-          </div>
+
+          <CapabilitiesGrid slug={service.slug} fallbackItems={service.items} />
         </div>
       </section>
 
-      <section className="bg-[#0b0d10] px-5 py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_1fr]">
+      {/* ── Project Examples & Business Outcomes ── */}
+      <section className="border-b border-white/10 bg-[#0b0d10] px-5 py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_1.1fr]">
           <Reveal>
-            <section className="h-full overflow-hidden rounded-lg border border-white/10 bg-white/[0.035]">
+            <div className="h-full overflow-hidden rounded-lg border border-white/10 bg-white/[0.035]">
               <div className="border-b border-white/10 p-7">
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-300">Project examples</p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">Example work for {service.title}</h2>
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+                  Project examples
+                </p>
+                <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">
+                  Example work for {service.title}
+                </h2>
               </div>
               <div className="grid gap-px bg-white/10">
                 {service.projectExamples.map((example, index) => (
-                  <div key={example} className="flex gap-4 bg-[#080a0c] p-5">
-                    <Layers3 size={20} className="mt-1 shrink-0 text-cyan-300" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{example}</h3>
-                      <p className="mt-2 text-sm leading-6 text-slate-400">
-                        Scope, assets, milestones, handover notes, and support status can be presented as a service-specific showcase.
+                  <details
+                    key={example}
+                    className="group bg-[#080a0c]"
+                    data-testid={`project-example-${index}`}
+                  >
+                    <summary className="flex cursor-pointer items-center gap-4 p-5 [&::-webkit-details-marker]:hidden">
+                      <Layers3
+                        size={18}
+                        className="shrink-0 text-cyan-300"
+                      />
+                      <span className="flex-1 text-sm font-semibold text-white sm:text-base">
+                        {example}
+                      </span>
+                      <ChevronDown
+                        size={16}
+                        className="shrink-0 text-slate-500 transition-transform group-open:rotate-180"
+                      />
+                    </summary>
+                    <div className="border-t border-white/5 px-5 pb-5 pt-3">
+                      <p className="text-sm leading-6 text-slate-400">
+                        {service.detail}
                       </p>
                     </div>
-                    <span className="ml-auto text-sm text-slate-600">0{index + 1}</span>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.06}>
+            <div className="h-full rounded-lg border border-white/10 bg-white/[0.035] p-7">
+              <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+                Business outcomes
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                {service.outcomes.map((outcome) => (
+                  <div
+                    key={outcome}
+                    className="flex gap-3 rounded-md border border-white/10 bg-black/24 p-4"
+                  >
+                    <CircleDot
+                      size={17}
+                      className="mt-0.5 shrink-0 text-cyan-300"
+                    />
+                    <div>
+                      <h4 className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan-200">
+                        {outcome.split(" ").slice(0, 2).join(" ")}
+                      </h4>
+                      <p className="mt-1 text-sm leading-6 text-slate-400">
+                        {outcome}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
-            </section>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <DetailBlock title="Business outcomes" items={service.outcomes} />
+            </div>
           </Reveal>
         </div>
       </section>
 
+      {/* ── CTA ── */}
       <section className="bg-[#050607] px-5 py-20 lg:px-8">
-        <Reveal className="mx-auto max-w-7xl rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,0.12),rgba(16,185,129,0.06),transparent)] p-8 md:p-12">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Next step</p>
-          <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-white">
-            Ready to turn {service.title.toLowerCase()} into a clear project plan?
+        <Reveal className="mx-auto max-w-7xl rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(34,211,238,0.10),rgba(16,185,129,0.05),transparent)] px-6 py-16 text-center sm:px-10 md:py-20">
+          <h2 className="mx-auto max-w-3xl text-3xl font-semibold tracking-tight text-cyan-100 sm:text-4xl md:text-5xl">
+            Ready for a Gated Infrastructure?
           </h2>
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300">
-            Share the systems, users, locations, timeline, and risks you want handled. NEXOIT will shape the scope, deliverables, and handover plan around your business.
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-slate-400">
+            Join the elite SMBs that treat their technology as a competitive
+            advantage rather than a friction point.
           </p>
-          <Link href="/contact" className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-cyan-200">
-            Talk to us <ArrowRight size={17} />
+          <Link
+            href="/contact"
+            className="mt-8 inline-flex items-center gap-2 rounded bg-white px-6 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-black transition hover:-translate-y-0.5 hover:bg-cyan-200"
+            data-testid="cta-consultation"
+          >
+            Request consultation
           </Link>
         </Reveal>
       </section>
     </>
-  );
-}
-
-function DetailBlock({ title, items }: { title: string; items: string[] }) {
-  return (
-    <section className="h-full rounded-lg border border-white/10 bg-white/[0.035] p-7">
-      <h2 className="text-2xl font-semibold text-white">{title}</h2>
-      <div className="mt-6 grid gap-3">
-        {items.map((item) => (
-          <div key={item} className="flex gap-3 rounded-md border border-white/10 bg-black/24 p-4 text-sm leading-6 text-slate-300">
-            <CircleDot size={17} className="mt-0.5 shrink-0 text-cyan-300" />
-            {item}
-          </div>
-        ))}
-      </div>
-    </section>
   );
 }
